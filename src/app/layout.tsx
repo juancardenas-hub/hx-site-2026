@@ -3,6 +3,9 @@ import { Fraunces, Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { SmoothScrollProvider } from '@/components/layout/SmoothScrollProvider';
+import { CursorFollow } from '@/components/layout/CursorFollow';
+import { PageTransition } from '@/components/layout/PageTransition';
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -59,9 +62,14 @@ export default function RootLayout({
       className={`${fraunces.variable} ${inter.variable} ${mono.variable}`}
     >
       <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <SmoothScrollProvider>
+          <CursorFollow />
+          <Header />
+          <PageTransition>
+            <main>{children}</main>
+          </PageTransition>
+          <Footer />
+        </SmoothScrollProvider>
       </body>
     </html>
   );

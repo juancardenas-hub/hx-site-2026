@@ -8,8 +8,10 @@ const nextConfig: NextConfig = {
       // Exemplo: { protocol: 'https', hostname: 'cms.headxperience.com' }
     ],
   },
-  // View Transitions API será habilitada no Prompt 03b — não ativar ainda
-  // porque depende de versão exata do Next.js e pode causar warnings.
+  // experimental.viewTransition fica DESLIGADO de propósito: ele depende do
+  // componente React <ViewTransition> (unstable_ViewTransition), que NÃO existe
+  // no react 19.2.4 stable — só no canal react@experimental. As transições de
+  // rota são feitas via overlay GSAP em PageTransition.tsx (cross-browser).
 };
 
 export default nextConfig;

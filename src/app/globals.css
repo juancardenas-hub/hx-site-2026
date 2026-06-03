@@ -38,3 +38,26 @@ body {
   background-color: var(--color-hx-lime);
   color: var(--color-hx-ink);
 }
+
+/* ============================================
+ * CURSOR CUSTOM (CursorFollow)
+ * Só ativo em desktop com ponteiro fino — a classe .has-custom-cursor
+ * é adicionada em <html> pelo componente quando o matchMedia bate.
+ * ============================================ */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+/* Dot padrão: branco + difference → inverte sobre qualquer fundo (paper ou ink). */
+.cursor-dot {
+  background-color: #ffffff;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+
+/* Hover sobre interativos: lime sólido, sem blend. */
+.cursor-dot.is-hover {
+  background-color: var(--color-hx-lime);
+  mix-blend-mode: normal;
+}
