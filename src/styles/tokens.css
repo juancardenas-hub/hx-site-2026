@@ -1,0 +1,63 @@
+/**
+ * HX Design Tokens — REV.4
+ * Single source of truth para paleta, tipografia, escala editorial e tracking.
+ * Importado em globals.css.
+ *
+ * Tailwind v4 expõe estes tokens automaticamente como utilities
+ * (ex: --color-hx-lime gera bg-hx-lime, text-hx-lime, border-hx-lime).
+ */
+
+@theme {
+  /* ============================================
+   * CORES — Paleta oficial HX (REV.4)
+   * ============================================ */
+
+  /* Primary — assinatura visual */
+  --color-hx-ink: #121212;        /* warm black principal */
+  --color-hx-ink-svg: #131313;    /* warm black usado nos SVGs do logo */
+  --color-hx-lime: #d6ed69;       /* ⭐ chartreuse oficial — accent (5%) */
+  --color-hx-lime-glow: #e6ff6b;  /* variante hover/pulse derivada */
+  --color-hx-paper: #f9f9f9;      /* off-white principal */
+  --color-hx-paper-lite: #fdfdfd; /* white quase puro */
+  --color-hx-cream: #f8eadc;      /* warm cream — seções editoriais especiais */
+
+  /* Neutral scale (extraída do CSS de produção do site atual) */
+  --color-hx-ink-95: #181818;
+  --color-hx-ink-90: #1a1a1a;
+  --color-hx-ink-80: #272727;
+  --color-hx-ink-border: #2d2d2d;
+  --color-hx-mid: #4d4d4d;
+  --color-hx-gray-text: #828282;
+  --color-hx-gray-soft: #898989;
+  --color-hx-light: #f4f4f4;
+
+  /* ============================================
+   * TIPOGRAFIA — Famílias
+   * ============================================ */
+  --font-display: var(--font-display), 'Times New Roman', serif;
+  --font-body: var(--font-body), system-ui, sans-serif;
+  --font-mono: var(--font-mono), 'Courier New', monospace;
+
+  /* ============================================
+   * ESCALA EDITORIAL — 12 / 14 / 16 / 20 / 28 / 40 / 64 / 96 / 144 / 240 / 360
+   * Gera classes text-ed-xs, text-ed-sm, ..., text-ed-7xl
+   * ============================================ */
+  --text-ed-xs: 0.75rem;      /* 12px */
+  --text-ed-sm: 0.875rem;     /* 14px */
+  --text-ed-base: 1rem;       /* 16px */
+  --text-ed-lg: 1.25rem;      /* 20px */
+  --text-ed-xl: 1.75rem;      /* 28px */
+  --text-ed-2xl: 2.5rem;      /* 40px */
+  --text-ed-3xl: 4rem;        /* 64px */
+  --text-ed-4xl: 6rem;        /* 96px */
+  --text-ed-5xl: 9rem;        /* 144px */
+  --text-ed-6xl: 15rem;       /* 240px */
+  --text-ed-7xl: 22.5rem;     /* 360px */
+
+  /* ============================================
+   * TRACKING — assinatura editorial
+   * ============================================ */
+  --tracking-ed-tight: -0.02em;  /* display sizes — Fraunces */
+  --tracking-ed-caps: 0.08em;    /* uppercase Inter — eyebrows */
+  --tracking-ed-normal: 0;       /* mono base */
+}
