@@ -6,6 +6,7 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from '@/lib/gsap';
 import { Container } from '@/components/ui/Container';
 import { EyebrowMono } from '@/components/ui/EyebrowMono';
+import { HeroBackground } from '@/components/home/HeroBackground';
 
 interface Word {
   t: string;
@@ -123,11 +124,14 @@ export function Hero() {
         className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-hx-paper pt-28 pb-32"
         aria-label="Apresentação HeadXperience"
       >
+        {/* FUNDO WEBGL (shader noise) + fallback estático */}
+        <HeroBackground />
+
         {/* H-EXTENSION — travessão do H que cruza a viewport no scroll */}
         <div
           ref={hLineRef}
           aria-hidden="true"
-          className="absolute inset-x-0 top-[58%] h-[2px] origin-left bg-hx-ink"
+          className="absolute inset-x-0 top-[58%] z-[1] h-[2px] origin-left bg-hx-ink"
           style={{ transform: 'scaleX(0)' }}
         />
 
