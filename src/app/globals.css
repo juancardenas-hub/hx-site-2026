@@ -61,3 +61,19 @@ body {
   background-color: var(--color-hx-lime);
   mix-blend-mode: normal;
 }
+
+/* ============================================
+ * TEXTO OUTLINE (marquee do hero)
+ * Fraunces vazado: fill transparente + contorno via -webkit-text-stroke.
+ * Fallback: se o browser não suportar text-stroke, preenche em ink.
+ * ============================================ */
+.text-stroke-ink {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-hx-ink);
+}
+
+@supports not ((-webkit-text-stroke: 1px #000)) {
+  .text-stroke-ink {
+    color: var(--color-hx-ink);
+  }
+}
