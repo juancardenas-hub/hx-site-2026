@@ -112,12 +112,22 @@ export function Header() {
           : 'bg-transparent backdrop-blur-0',
       )}
     >
-      <div className="mx-auto flex h-20 w-full max-w-[1440px] items-center justify-between px-6 md:px-12">
+      <div
+        className={cn(
+          'mx-auto flex h-20 w-full max-w-[1440px] items-center justify-between px-6 md:px-12',
+          // Header transparente sobre hero de cor variável: difference faz o
+          // conteúdo (branco) auto-inverter — escuro sobre paper, claro sobre ink.
+          !scrolled && !open && 'mix-blend-difference',
+        )}
+      >
         {/* LOGO */}
         <Link
           href="/"
           aria-label="HeadXperience — página inicial"
-          className="relative z-[70] text-hx-ink transition-opacity duration-300 hover:opacity-70"
+          className={cn(
+            'relative z-[70] transition-opacity duration-300 hover:opacity-70',
+            !scrolled || open ? 'text-white' : 'text-hx-ink',
+          )}
         >
           <Logo className="h-7" title="HeadXperience" />
         </Link>
@@ -137,9 +147,11 @@ export function Header() {
                     aria-current={active ? 'page' : undefined}
                     className={cn(
                       'font-mono text-ed-xs uppercase tracking-ed-caps transition-colors duration-200',
-                      active
-                        ? 'text-hx-ink'
-                        : 'text-hx-gray-text hover:text-hx-ink',
+                      !scrolled
+                        ? 'text-white'
+                        : active
+                          ? 'text-hx-ink'
+                          : 'text-hx-gray-text hover:text-hx-ink',
                     )}
                   >
                     {item.label}
@@ -162,13 +174,21 @@ export function Header() {
           <span
             className={cn(
               'block h-px w-7 origin-center transition-all duration-300 ease-out',
-              open ? 'translate-y-[4px] rotate-45 bg-hx-paper' : 'bg-hx-ink',
+              open
+                ? 'translate-y-[4px] rotate-45 bg-hx-paper'
+                : !scrolled
+                  ? 'bg-white'
+                  : 'bg-hx-ink',
             )}
           />
           <span
             className={cn(
               'block h-px w-7 origin-center transition-all duration-300 ease-out',
-              open ? '-translate-y-[4px] -rotate-45 bg-hx-paper' : 'bg-hx-ink',
+              open
+                ? '-translate-y-[4px] -rotate-45 bg-hx-paper'
+                : !scrolled
+                  ? 'bg-white'
+                  : 'bg-hx-ink',
             )}
           />
         </button>
