@@ -1,15 +1,12 @@
-'use client';
-
-import { useRef } from 'react';
-import { useGSAP } from '@gsap/react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
+import { CountUp } from '@/components/ui/CountUp';
 
 interface StatData {
   to: number;
   prefix?: string;
   suffix?: string;
+  decimals?: number;
   label: string;
 }
 
@@ -21,68 +18,24 @@ const STATS: StatData[] = [
   { to: 100, suffix: '%', label: 'Projetos com método' },
 ];
 
-function Stat({ to, prefix = '', suffix = '', label }: StatData) {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const numRef = useRef<HTMLSpanElement>(null);
-  const finalText = `${prefix}${to}${suffix}`;
-
-  useGSAP(
-    () => {
-      const el = numRef.current;
-      if (!el) return;
-
-      const mm = gsap.matchMedia();
-      // Só conta com movimento permitido; sob reduced-motion fica o valor final.
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const obj = { v: 0 };
-        el.textContent = `${prefix}0${suffix}`;
-        const st = ScrollTrigger.create({
-          trigger: wrapRef.current!,
-          start: 'top 85%',
-          once: true,
-          onEnter: () =>
-            gsap.to(obj, {
-              v: to,
-              duration: 1.6,
-              ease: 'power2.out',
-              onUpdate: () => {
-                el.textContent = `${prefix}${Math.round(obj.v)}${suffix}`;
-              },
-            }),
-        });
-        return () => st.kill();
-      });
-
-      return () => mm.revert();
-    },
-    { scope: wrapRef },
-  );
-
-  return (
-    <div ref={wrapRef} className="border-l border-hx-ink-border pl-6">
-      {/* Ghost invisível reserva a largura final → counter-up sem layout shift */}
-      <div className="relative inline-block font-display text-[clamp(2.75rem,6vw,5.5rem)] font-semibold leading-none tracking-ed-tight tabular-nums">
-        <span aria-hidden="true" className="invisible">
-          {finalText}
-        </span>
-        <span ref={numRef} className="absolute inset-0">
-          {finalText}
-        </span>
-      </div>
-      <p className="mt-4 font-mono text-ed-xs uppercase tracking-ed-caps text-hx-gray-text">
-        {label}
-      </p>
-    </div>
-  );
-}
-
 export function ResultsStrip() {
   return (
     <Section variant="paper-lite" compact aria-label="Resultados em números">
       <Container>
         <div className="grid grid-cols-2 gap-y-12 md:grid-cols-4">
           {STATS.map((s) => (
-            <Stat key={s.label} {...s} />
+            <div key={s.label} className="border-l border-hx-ink-border pl-6">
+              <CountUp
+                to={s.to}
+                prefix={s.prefix}
+                suffix={s.suffix}
+                decimals={s.decimals}
+                className="font-display text-[clamp(2.75rem,6vw,5.5rem)] font-semibold leading-none tracking-ed-tight"
+              />
+              <p className="mt-4 font-mono text-ed-xs uppercase tracking-ed-caps text-hx-gray-text">
+                {s.label}
+              </p>
+            </div>
           ))}
         </div>
       </Container>
