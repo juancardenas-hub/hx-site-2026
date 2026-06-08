@@ -34,7 +34,7 @@ export function SplitReveal({
   useGSAP(
     () => {
       if (!ref.current) return;
-      const split = new SplitText(ref.current, { type });
+      const split = new SplitText(ref.current, { type, aria: 'none' });
       const targets = type === 'words' ? split.words : split.chars;
       gsap.from(targets, {
         y,

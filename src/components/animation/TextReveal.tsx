@@ -42,7 +42,10 @@ export function TextReveal({
 
       const mm = gsap.matchMedia();
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const split = new SplitText(el, { type });
+        // aria: 'none' evita que o SplitText injete aria-label no <div> wrapper
+        // (atributo ARIA proibido em elemento genérico). O texto dos spans
+        // permanece legível por leitores de tela na ordem natural.
+        const split = new SplitText(el, { type, aria: 'none' });
         const targets = type === 'words' ? split.words : split.chars;
         gsap.set(targets, { opacity: 0, y });
 

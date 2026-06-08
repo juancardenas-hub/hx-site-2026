@@ -39,39 +39,63 @@ export function MethodStep({
       if (!el) return;
 
       const mm = gsap.matchMedia();
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.set(el, { opacity: 0, x: align === 'right' ? 40 : -40 });
-        const tweens: gsap.core.Tween[] = [];
-        const st = ScrollTrigger.create({
-          trigger: el,
-          start: 'top 78%',
-          once: true,
-          onEnter: () => {
-            tweens.push(
-              gsap.to(el, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }),
-            );
-            if (lineRef.current) {
-              gsap.set(lineRef.current, { scaleX: 0, transformOrigin: 'left center' });
+      mm.add(
+        {
+          isDesktop: '(min-width: 768px)',
+          reduce: '(prefers-reduced-motion: reduce)',
+        },
+        (ctx) => {
+          const { isDesktop, reduce } = ctx.conditions as {
+            isDesktop: boolean;
+            reduce: boolean;
+          };
+          const line = lineRef.current;
+
+          // reduced-motion: estados finais imediatos.
+          if (reduce) {
+            gsap.set(el, { opacity: 1, x: 0, y: 0 });
+            if (line) gsap.set(line, { scaleX: 1 });
+            return;
+          }
+
+          // Slide lateral SÓ no desktop (onde existe o zig-zag). No mobile
+          // (coluna única) usa apenas opacity + y — o x:±40 gerava ~16px de
+          // overflow horizontal nas etapas ainda não disparadas.
+          gsap.set(el, {
+            opacity: 0,
+            x: isDesktop ? (align === 'right' ? 40 : -40) : 0,
+            y: isDesktop ? 0 : 24,
+          });
+
+          const tweens: gsap.core.Tween[] = [];
+          const st = ScrollTrigger.create({
+            trigger: el,
+            start: 'top 78%',
+            once: true,
+            onEnter: () => {
               tweens.push(
-                gsap.to(lineRef.current, {
-                  scaleX: 1,
-                  duration: 0.7,
-                  ease: 'power2.inOut',
+                gsap.to(el, {
+                  opacity: 1,
+                  x: 0,
+                  y: 0,
+                  duration: 0.8,
+                  ease: 'power3.out',
                 }),
               );
-            }
-          },
-        });
-        return () => {
-          st.kill();
-          tweens.forEach((t) => t.kill());
-        };
-      });
-
-      mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set(el, { opacity: 1, x: 0 });
-        if (lineRef.current) gsap.set(lineRef.current, { scaleX: 1 });
-      });
+              if (line) {
+                gsap.set(line, { scaleX: 0, transformOrigin: 'left center' });
+                tweens.push(
+                  gsap.to(line, { scaleX: 1, duration: 0.7, ease: 'power2.inOut' }),
+                );
+              }
+            },
+          });
+          return () => {
+            st.kill();
+            tweens.forEach((t) => t.kill());
+          };
+        },
+      );
 
       return () => mm.revert();
     },
@@ -103,11 +127,11 @@ export function MethodStep({
           >
             {num}
           </span>
-          <h3 className="font-display text-ed-2xl leading-none tracking-ed-tight">
+          <h2 className="font-display text-ed-2xl leading-none tracking-ed-tight">
             {/* leitura acessível: "Etapa 01 — Descobrir" */}
             <span className="sr-only">{`Etapa ${num} — `}</span>
             {title}
-          </h3>
+          </h2>
         </div>
 
         <p className="mt-8 max-w-xl font-body text-ed-lg leading-relaxed text-hx-gray-text">
