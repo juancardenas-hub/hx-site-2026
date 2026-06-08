@@ -1,7 +1,9 @@
 import { Hero } from '@/components/home/Hero';
 import { ResultsStrip } from '@/components/home/ResultsStrip';
 import { Capabilities } from '@/components/home/Capabilities';
+import { CasesPreview } from '@/components/home/CasesPreview';
 import { ManifestoPreview } from '@/components/home/ManifestoPreview';
+import { CTAFinal } from '@/components/home/CTAFinal';
 
 export default function Home() {
   return (
@@ -9,9 +11,9 @@ export default function Home() {
       <Hero />
       <ResultsStrip />
       <Capabilities />
-      {/* CasesPreview entra aqui no Prompt 05b */}
+      <CasesPreview />
       <ManifestoPreview />
-      {/* CTAFinal entra no Prompt 05b */}
+      <CTAFinal />
     </>
   );
 }
