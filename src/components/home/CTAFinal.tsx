@@ -25,26 +25,43 @@ function Arrow() {
   );
 }
 
+interface CTAFinalProps {
+  /** Eyebrow mono no topo. Omitido = sem eyebrow. */
+  eyebrow?: string;
+  /** Headline principal. */
+  headline?: string;
+  /** Texto de apoio. Omitido = sem subtexto. */
+  subtext?: string;
+}
+
 /**
- * CTA final da home — único bloco full-bleed lime do site (momento sancionado
- * dos 5%). Botões com a assinatura HX (inversão ink↔lime no hover), sem ícone
- * verde flutuante genérico de WhatsApp.
+ * CTA full-bleed lime reutilizável — único tipo de bloco lime pleno do site
+ * (momento sancionado dos 5%). Botões com a assinatura HX (inversão ink↔lime no
+ * hover), sem ícone verde flutuante genérico de WhatsApp. Copy parametrizável.
  */
-export function CTAFinal() {
+export function CTAFinal({
+  eyebrow = '05 / VAMOS CONVERSAR',
+  headline = 'Vamos criar algo que fique.',
+  subtext = 'Sem formulário longo, sem proposta enrolada. Fale direto com o estúdio.',
+}: CTAFinalProps = {}) {
   return (
     <Section variant="lime" aria-label="Vamos conversar">
       <Container>
-        <EyebrowMono className="block text-hx-ink/60">05 / VAMOS CONVERSAR</EyebrowMono>
+        {eyebrow ? (
+          <EyebrowMono className="block text-hx-ink/60">{eyebrow}</EyebrowMono>
+        ) : null}
 
         <ScrollReveal>
           <h2 className="mt-8 max-w-3xl font-display text-[clamp(2.5rem,6vw,6rem)] font-semibold leading-[0.95] tracking-ed-tight text-hx-ink">
-            Vamos criar algo que fique.
+            {headline}
           </h2>
         </ScrollReveal>
 
-        <p className="mt-8 max-w-md font-body text-ed-lg text-hx-ink/70">
-          Sem formulário longo, sem proposta enrolada. Fale direto com o estúdio.
-        </p>
+        {subtext ? (
+          <p className="mt-8 max-w-md font-body text-ed-lg text-hx-ink/70">
+            {subtext}
+          </p>
+        ) : null}
 
         <div className="mt-12 flex flex-col gap-4 sm:flex-row">
           <Link
